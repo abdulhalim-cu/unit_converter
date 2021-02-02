@@ -22,11 +22,24 @@ class _MyAppState extends State<MyApp> {
     'ounces',
   ];
 
+  String _startMeasure;
+  String _convertedMeasure;
+
   @override
   void initState() {
     _numberForm = 0;
     super.initState();
   }
+
+  final TextStyle inputStyle = TextStyle(
+    fontSize: 20,
+    color: Colors.blue.shade900,
+  );
+
+  final TextStyle labelStyle = TextStyle(
+    fontSize: 24,
+    color: Colors.grey.shade700,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -36,29 +49,97 @@ class _MyAppState extends State<MyApp> {
         appBar: AppBar(
           title: Text('Measures Converter'),
         ),
-        body: Center(
+        body: Container(
+          padding: EdgeInsets.symmetric(horizontal: 20.0),
           child: Column(
             children: [
-              DropdownButton(
-                items: _measures
-                    .map((measure) => DropdownMenuItem(
-                          child: Text(measure),
-                          value: measure,
-                        ))
-                    .toList(),
-                onChanged: (_) {},
+              Expanded(
+                child: Text(
+                  'Value',
+                  style: labelStyle,
+                ),
               ),
-              TextField(
-                onChanged: (text) {
-                  var number = double.tryParse(text);
-                  if (number != null) {
+              Expanded(
+                child: TextField(
+                  onChanged: (text) {
+                    var number = double.tryParse(text);
+                    if (number != null) {
+                      setState(() {
+                        _numberForm = number;
+                      });
+                    }
+                  },
+                  decoration: InputDecoration(
+                    hintText: "Please insert the measure to be converted",
+                  ),
+                  style: inputStyle,
+                ),
+              ),
+              Expanded(
+                child: Text(
+                  'From',
+                  style: labelStyle,
+                ),
+              ),
+              Expanded(
+                child: DropdownButton(
+                  items: _measures
+                      .map((measure) => DropdownMenuItem(
+                            child: Text(
+                              measure,
+                              style: inputStyle,
+                            ),
+                            value: measure,
+                          ))
+                      .toList(),
+                  onChanged: (measure) {
                     setState(() {
-                      _numberForm = number;
+                      _startMeasure = measure;
                     });
-                  }
-                },
+                  },
+                  value: _startMeasure,
+                ),
               ),
-              Text((_numberForm == null) ? "" : _numberForm.toString()),
+              Expanded(
+                child: Text(
+                  'To',
+                  style: labelStyle,
+                ),
+              ),
+              Expanded(
+                child: DropdownButton(
+                  items: _measures
+                      .map((measure) => DropdownMenuItem(
+                            child: Text(
+                              measure,
+                              style: inputStyle,
+                            ),
+                            value: measure,
+                          ))
+                      .toList(),
+                  onChanged: (measure) {
+                    setState(() {
+                      _convertedMeasure = measure;
+                    });
+                  },
+                  value: _convertedMeasure,
+                ),
+              ),
+              Expanded(
+                child: RaisedButton(
+                  child: Text(
+                    'Convert',
+                    style: inputStyle,
+                  ),
+                  onPressed: () => true,
+                ),
+              ),
+              Expanded(
+                child: Text(
+                  (_numberForm == null) ? "" : _numberForm.toString(),
+                  style: labelStyle,
+                ),
+              ),
             ],
           ),
         ),
