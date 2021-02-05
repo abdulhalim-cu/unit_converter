@@ -68,7 +68,6 @@ class _ConverterState extends State<Converter> {
         // crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           InputWidget(
-            flex: 1,
             label: 'Value',
             childInputWidget: TextField(
               decoration: InputDecoration(
@@ -87,7 +86,6 @@ class _ConverterState extends State<Converter> {
             ),
           ),
           InputWidget(
-            flex: 1,
             label: 'From',
             childInputWidget: DropdownButton(
               items: _measuresMap.keys
@@ -107,7 +105,6 @@ class _ConverterState extends State<Converter> {
             ),
           ),
           InputWidget(
-            flex: 1,
             label: 'To',
             childInputWidget: DropdownButton(
               items: _measuresMap.keys
@@ -172,18 +169,17 @@ class _ConverterState extends State<Converter> {
 }
 
 class InputWidget extends StatelessWidget {
-  InputWidget({this.flex, this.label, this.childInputWidget});
+  InputWidget({this.label, this.childInputWidget});
 
   final String label;
   final Widget childInputWidget;
-  final int flex;
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
         Expanded(
-          flex: flex,
+          flex: 1,
           child: Text(
             label,
             style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
